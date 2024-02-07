@@ -1,6 +1,6 @@
 # Anisotropic Diffusive Equation MATLAB functions
 
-A collection of utility functions to returning solutions to the Anisotropic Diffusive Equation (ADE) in different scattering regimes (steady-state, time-resolved, time- and space-resolved).
+A collection of utility functions returning solutions to the Anisotropic Diffusive Equation (ADE) in different scattering regimes (steady-state, time-resolved, time- and space-resolved).
 This package is given as a supplemental material of a preprint paper on Anisotropic Diffusion.
 Note that with respect to the preprint, these functions extend the solutions to the case of complete 3D anisotropy (lx!=ly!=lz). This is achieved via numerical evaluation of integrals, instead of explicit analytical solutions.
 
