@@ -1,10 +1,31 @@
 function Rt = Rt_ADE_matched(t, L, n_matched, lx, ly, lz, mua)
-
-% this function returns the total time-resolved reflectance R(t) from an anisotropic slab of thickness L [μm].
-% The refractive index is matched with the environment. Absorption is considered to be uniform, mua [1/μm].
+% RT_ADE_MATCHED time-resolved reflectance from an index-matched turbid slab
+%
+% Brief: this function returns the total time-resolved reflectance R(t)
+% from an anisotropic slab of thickness L [μm].
+% The refractive index is matched with the environment. Absorption is
+% considered to be uniform, mua [1/μm].
 % t is an array of times [ps], while lx, ly and lz are scalars [μm].
+% 
+% Inputs:
+%    t - array of times [ps]
+%    L - slab thickness [μm]
+%    n_matched - refractive index (matched with the environment)
+%    lx - scattering mean free path along x [μm]
+%    ly - scattering mean free path along y [μm]
+%    lz - scattering mean free path along z [μm]
+%    mua - absorption rate [1/μm]
+% 
+% Outputs:
+%    Rt - array of total time-resolved reflectance R(t)
+% 
+% See also: Test_function.m
 
-v=299.7924589/n_matched;
+% Author:       Ernesto Pini
+% Affiliation:  Department of Physics and Astronomy, Università di Firenze
+% Email:        pinie@lens.unifi.it
+
+v = 299.7924589/n_matched;
 
 if lx == lz && lx == ly
     Dx = lx*v/3;
@@ -12,9 +33,9 @@ if lx == lz && lx == ly
     Dz = lz*v/3;
     ze = 2*lx/3;
 else
-    mux=1/lx;
-    muy=1/ly;
-    muz=1/lz;
+    mux = 1/lx;
+    muy = 1/ly;
+    muz = 1/lz;
 
     lavgfun = @(chi,phi) 1./(mux.*(1 - chi.^2).*((cos(phi)).^2) + muy.*(1 - chi.^2).*((sin(phi)).^2) + muz.*(chi.^2));
     lavg = (1/4/pi)*integral2(lavgfun, -1, 1, 0, 2*pi);
@@ -34,7 +55,7 @@ else
     Bfun = @(chi,phi)  chi./(mux.*(1 - chi.^2).*((cos(phi)).^2) + muy.*(1 - chi.^2).*((sin(phi)).^2) + muz.*(chi.^2));
     C = integral2(Cfun, 0, 1, 0, 2*pi);
     B = integral2(Bfun, 0, 1, 0, 2*pi);
-    ze=C/B;
+    ze = C/B;
 end
 
 D = (Dx*Dy*Dz)^(1/3);
@@ -47,7 +68,7 @@ M = 10000; % number of virtual sources considered in the expansion
 for m = -M:M
     z3 = - 2*m*L - 4*m*ze - z0;
     z4 = - 2*m*L - (4*m - 2)*ze + z0;
-    R = R + (z3*exp(-(z3)^2./(4*Dz*t))-z4*exp(-(z4)^2./(4*Dz*t)));
+    R = R + (z3*exp(-(z3)^2./(4*Dz*t)) - z4*exp(-(z4)^2./(4*Dz*t)));
 end
 
 Rt = -(1/4)*((pi.*Dz.*(t).^3).^(-1/2)).*R.*exp(-v*t*mua);

@@ -1,11 +1,30 @@
 function Txy = Txy_ADE_matched(x, y, L, n_matched, lx, ly, lz)
-
-% this function returns the space resolved steady-state transmittance T(x,y)
+% TXY_ADE_MATCHED space-resolved transmittance from an index-matched turbid slab
+%
+% Brief: this function returns the space-resolved steady-state transmittance T(x,y)
 % for a non-absorbing anisotropic slab of thickness L [μm].
 % The refractive index is matched with the environment.
 % lx, ly and lz are scalars [μm].
+% 
+% Inputs:
+%    x - array of positions [μm]
+%    y - array of positions [μm]
+%    L - slab thickness [μm]
+%    n_matched - refractive index (matched with the environment)
+%    lx - scattering mean free path along x [μm]
+%    ly - scattering mean free path along y [μm]
+%    lz - scattering mean free path along z [μm]
+% 
+% Outputs:
+%    Txy - array of space-resolved transmittance T(x,y)
+% 
+% See also: Test_function.m
 
-v=299.7924589/n_matched;
+% Author:       Ernesto Pini
+% Affiliation:  Department of Physics and Astronomy, Università di Firenze
+% Email:        pinie@lens.unifi.it
+
+v = 299.7924589/n_matched;
 
 if lx == lz && lx == ly
     Dx = lx*v/3;
@@ -13,9 +32,9 @@ if lx == lz && lx == ly
     Dz = lz*v/3;
     ze = 2*lx/3;
 else
-    mux=1/lx;
-    muy=1/ly;
-    muz=1/lz;
+    mux = 1/lx;
+    muy = 1/ly;
+    muz = 1/lz;
 
     lavgfun = @(chi,phi) 1./(mux.*(1 - chi.^2).*((cos(phi)).^2) + muy.*(1 - chi.^2).*((sin(phi)).^2) + muz.*(chi.^2));
     lavg = (1/4/pi)*integral2(lavgfun, -1, 1, 0, 2*pi);
@@ -35,7 +54,7 @@ else
     Bfun = @(chi,phi)  chi./(mux.*(1 - chi.^2).*((cos(phi)).^2) + muy.*(1 - chi.^2).*((sin(phi)).^2) + muz.*(chi.^2));
     C = integral2(Cfun, 0, 1, 0, 2*pi);
     B = integral2(Bfun, 0, 1, 0, 2*pi);
-    ze=C/B;
+    ze = C/B;
 end
 
 D = (Dx*Dy*Dz)^(1/3);

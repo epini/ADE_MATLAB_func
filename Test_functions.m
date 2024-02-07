@@ -9,11 +9,12 @@
 % t is an array of times [ps], x and y are an array of positions [μm],
 % while lx, ly and lz are scalars [μm].
 
-% % Note that when discretizing a continuous function the binning width in
+% Note that when discretizing a continuous function the binning width in
 % space and time must be accounted for (e.g. mean(diff(t)).
 
 %% set parameters
-% if computation is too slow, consider reducing time and space bins
+% if computation is too slow, consider reducing time and space bins or the
+% number of virtual sources considered in the expansion M in the functions
 
 L = 1000;
 n_matched = 1.3;
@@ -40,7 +41,7 @@ legend('Total Reflectance', 'Total Transmittance','interpreter','latex', 'Fontsi
 axis([0 length(t) 1e-8 1])
 
 %% Time- and Space-Resolved reflectance
-% transmittance is identical when the frames are normalized
+% transmittance is identical after the ballistic transient when the frames are normalized
 
 t2 = linspace(0.5, 15.5, 16); % define shorter times, adjust the number of tiles if the number of times is changed
 sx = 0;
@@ -50,21 +51,23 @@ Rxyt = Rxyt_ADE_matched(x, y, t2, L, n_matched, lx, ly, lz, sx, sy, mua)*mean(di
 Txyt = Txyt_ADE_matched(x, y, t2, L, n_matched, lx, ly, lz, sx, sy, mua)*mean(diff(t2))*mean(diff(x))*mean(diff(y));
 
 figure(2) % these frames are in linear scale
-x0=500;
-y0=200;
-width=500;
-height=500;
+x0 = 500;
+y0 = 200;
+width = 500;
+height = 500;
 set(gcf,'position',[x0,y0,width,height])
 tile = tiledlayout(4,4);
-tile.Padding = 'tight';
-tile.TileSpacing = 'tight';
+tile.Padding = 'compact';
+tile.TileSpacing = 'compact';
 colormap(parula(256))
 
 for i = 1:length(t2)
     figure(2), nexttile
     imagesc(Rxyt(:,:,i));
-    set(gca,'visible','off')
+    set(gca,'YTickLabel',[]);
+    set(gca,'XTickLabel',[]);
     axis equal tight
+    title(strcat('$\displaystyle$', num2str(t2(i)), ' ps'),'interpreter','latex', 'Fontsize', 10)
 end
 
 %% Steady-state reflectance/transmittance
@@ -73,10 +76,10 @@ Rxy = Rxy_ADE_matched(x, y, L, n_matched, lx, ly, lz)*mean(diff(x))*mean(diff(y)
 Txy = Txy_ADE_matched(x, y, L, n_matched, lx, ly, lz)*mean(diff(x))*mean(diff(y));
 
 figure(3) % these frames are in logarithmic scale, mind the different colorbar for Rxy and Txy
-x0=350;
-y0=60;
-width=800;
-height=800;
+x0 = 350;
+y0 = 60;
+width = 800;
+height = 800;
 set(gcf,'position',[x0,y0,width,height])
 tile = tiledlayout(2,2);
 tile.Padding = 'compact';
