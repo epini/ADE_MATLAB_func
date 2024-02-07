@@ -1,8 +1,8 @@
-function Tt = Trans_TR_ADE_Matched(t, L, n_matched, lx, ly, lz, mua)
+function Rt = Rt_ADE_matched(t, L, n_matched, lx, ly, lz, mua)
 
-% this function returns the total time-resolved transmittance T(t) from an anisotropic slab of thickness L [um].
-% The refractive index is matched with the environment. Absorption is considered to be uniform, mua [1/um].
-% t is an array of times in ps, while lx, ly and lz are scalars in microns.
+% this function returns the total time-resolved reflectance R(t) from an anisotropic slab of thickness L [μm].
+% The refractive index is matched with the environment. Absorption is considered to be uniform, mua [1/μm].
+% t is an array of times [ps], while lx, ly and lz are scalars [μm].
 
 v=299.7924589/n_matched;
 
@@ -41,15 +41,15 @@ D = (Dx*Dy*Dz)^(1/3);
 
 z0 = lz;
 
-T = zeros(size(t));
+R = zeros(size(t));
 
-M = 10000; %number of iterations
+M = 10000; % number of virtual sources considered in the expansion
 for m = -M:M
-    z1 = L*(1-2*m) - 4*m*ze - z0;
-    z2 = L*(1-2*m) - (4*m - 2)*ze + z0;
-    T = T + (z1*exp(-(z1)^2./(4*Dz*t))-z2*exp(-(z2)^2./(4*Dz*t)));
+    z3 = - 2*m*L - 4*m*ze - z0;
+    z4 = - 2*m*L - (4*m - 2)*ze + z0;
+    R = R + (z3*exp(-(z3)^2./(4*Dz*t))-z4*exp(-(z4)^2./(4*Dz*t)));
 end
 
-Tt = (1/4)*((pi.*Dz.*(t).^3).^(-1/2)).*T.*exp(-v*t*mua);
+Rt = -(1/4)*((pi.*Dz.*(t).^3).^(-1/2)).*R.*exp(-v*t*mua);
 
 end

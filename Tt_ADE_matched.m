@@ -1,9 +1,8 @@
-function Txy = Trans_SS_ADE_Matched(x, y, L, n_matched, lx, ly, lz)
+function Tt = Tt_ADE_matched(t, L, n_matched, lx, ly, lz, mua)
 
-% this function returns the space resolved steady-state transmittance T(x,y)
-% for a non-absorbing anisotropic slab of thickness L [um].
-% The refractive index is matched with the environment.
-% lx, ly and lz are scalars in microns.
+% this function returns the total time-resolved transmittance T(t) from an anisotropic slab of thickness L [μm].
+% The refractive index is matched with the environment. Absorption is considered to be uniform, mua [1/μm].
+% t is an array of times in [ps], while lx, ly and lz are scalars [μm].
 
 v=299.7924589/n_matched;
 
@@ -39,17 +38,18 @@ else
 end
 
 D = (Dx*Dy*Dz)^(1/3);
+
 z0 = lz;
 
-Txy = zeros(length(x),length(y));
+T = zeros(size(t));
 
-M = 5000; %number of iterations
+M = 10000; % number of virtual sources considered in the expansion
 for m = -M:M
     z1 = L*(1-2*m) - 4*m*ze - z0;
     z2 = L*(1-2*m) - (4*m - 2)*ze + z0;
-    Txy = Txy + z1.*(1/Dz*z1^2 + 1/Dx.*(x.^2).' + 1/Dy.*y.^2).^(-3/2) - z2.*(1/Dz*z2^2 + 1/Dx.*(x.^2).' + 1/Dy.*y.^2).^(-3/2);
+    T = T + (z1*exp(-(z1)^2./(4*Dz*t))-z2*exp(-(z2)^2./(4*Dz*t)));
 end
 
-Txy = D^(-3/2)*Txy/4/pi;
+Tt = (1/4)*((pi.*Dz.*(t).^3).^(-1/2)).*T.*exp(-v*t*mua);
 
 end

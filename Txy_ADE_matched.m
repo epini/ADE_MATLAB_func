@@ -1,9 +1,9 @@
-function Rxy = Refl_SS_ADE_Matched(x, y, L, n_matched, lx, ly, lz)
+function Txy = Txy_ADE_matched(x, y, L, n_matched, lx, ly, lz)
 
-% this function returns the space resolved steady-state reflectance R(x,y)
-% for a non-absorbing anisotropic slab of thickness L [um].
+% this function returns the space resolved steady-state transmittance T(x,y)
+% for a non-absorbing anisotropic slab of thickness L [μm].
 % The refractive index is matched with the environment.
-% lx, ly and lz are scalars in microns.
+% lx, ly and lz are scalars [μm].
 
 v=299.7924589/n_matched;
 
@@ -41,15 +41,15 @@ end
 D = (Dx*Dy*Dz)^(1/3);
 z0 = lz;
 
-Rxy = zeros(length(x),length(y));
+Txy = zeros(length(x),length(y));
 
-M = 5000; %number of iterations
+M = 5000; % number of virtual sources considered in the expansion
 for m = -M:M
-    z3 = -2*m*L - 4*m*ze - z0;
-    z4 = -2*m*L - (4*m - 2)*ze + z0;
-    Rxy = Rxy + z3.*(1/Dz*z3^2 + 1/Dx.*(x.^2).' + 1/Dy.*y.^2).^(-3/2) - z4.*(1/Dz*z4^2 + 1/Dx.*(x.^2).' + 1/Dy.*y.^2).^(-3/2);
+    z1 = L*(1-2*m) - 4*m*ze - z0;
+    z2 = L*(1-2*m) - (4*m - 2)*ze + z0;
+    Txy = Txy + z1.*(1/Dz*z1^2 + 1/Dx.*(x.^2).' + 1/Dy.*y.^2).^(-3/2) - z2.*(1/Dz*z2^2 + 1/Dx.*(x.^2).' + 1/Dy.*y.^2).^(-3/2);
 end
 
-Rxy = -D^(-3/2)*Rxy/4/pi;
+Txy = D^(-3/2)*Txy/4/pi;
 
 end

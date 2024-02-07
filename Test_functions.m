@@ -2,14 +2,14 @@
 
 % This MATLAB script runs a test of the Anisotropic Diffusive Equation
 % functions used to evaluate the transmittance/reflectance for an 
-% anisotropic slab of thickness L [microns].
+% anisotropic slab of thickness L [μm].
 % The refractive index is matched with the environment.
-% Absorption is considered to be uniform, mua [1/microns], or absent for the
+% Absorption is considered to be uniform, mua [1/μm], or absent for the
 % steady-state intensity profiles.
-% t is an array of times [ps], x and y are an arras of space in microsn,
-% while lx, ly and lz are scalars [microns].
+% t is an array of times [ps], x and y are an array of positions [μm],
+% while lx, ly and lz are scalars [μm].
 
-% Note that when discretizing a continuous function the binning width in
+% % Note that when discretizing a continuous function the binning width in
 % space and time must be accounted for (e.g. mean(diff(t)).
 
 %% set parameters
@@ -27,14 +27,14 @@ lz = 20;
 
 %% Total Time-Resolved reflectance/transmittance
 
-Rt = Refl_TR_ADE_Matched(t, L, n_matched, lx, ly, lz, mua)*mean(diff(t));
-Tt = Trans_TR_ADE_Matched(t, L, n_matched, lx, ly, lz, mua)*mean(diff(t));
+Rt = Rt_ADE_matched(t, L, n_matched, lx, ly, lz, mua)*mean(diff(t));
+Tt = Tt_ADE_matched(t, L, n_matched, lx, ly, lz, mua)*mean(diff(t));
 
 figure(1), hold on, grid on, box on
 plot(t, Rt, 'r')
 plot(t, Tt, 'b')
 set(gca, 'yscale', 'log')
-ylabel('$\displaystyle Intensity$ (a.u.)','interpreter','latex', 'Fontsize', 16)
+ylabel('$\displaystyle$ Intensity (a.u.)','interpreter','latex', 'Fontsize', 16)
 xlabel('$\displaystyle t$ (ps)','interpreter','latex', 'Fontsize', 16)
 legend('Total Reflectance', 'Total Transmittance','interpreter','latex', 'Fontsize', 14)
 axis([0 length(t) 1e-8 1])
@@ -46,8 +46,8 @@ t2 = linspace(0.5, 15.5, 16); % define shorter times, adjust the number of tiles
 sx = 0;
 sy = 0;
 
-Rxyt = Refl_TSR_ADE_Matched(x, y, t2, L, n_matched, lx, ly, lz, sx, sy, mua)*mean(diff(t2))*mean(diff(x))*mean(diff(y));
-Txyt = Trans_TSR_ADE_Matched(x, y, t2, L, n_matched, lx, ly, lz, sx, sy, mua)*mean(diff(t2))*mean(diff(x))*mean(diff(y));
+Rxyt = Rxyt_ADE_matched(x, y, t2, L, n_matched, lx, ly, lz, sx, sy, mua)*mean(diff(t2))*mean(diff(x))*mean(diff(y));
+Txyt = Txyt_ADE_matched(x, y, t2, L, n_matched, lx, ly, lz, sx, sy, mua)*mean(diff(t2))*mean(diff(x))*mean(diff(y));
 
 figure(2) % these frames are in linear scale
 x0=500;
@@ -69,8 +69,8 @@ end
 
 %% Steady-state reflectance/transmittance
 
-Rxy = Refl_SS_ADE_Matched(x, y, L, n_matched, lx, ly, lz)*mean(diff(x))*mean(diff(y));
-Txy = Trans_SS_ADE_Matched(x, y, L, n_matched, lx, ly, lz)*mean(diff(x))*mean(diff(y));
+Rxy = Rxy_ADE_matched(x, y, L, n_matched, lx, ly, lz)*mean(diff(x))*mean(diff(y));
+Txy = Txy_ADE_matched(x, y, L, n_matched, lx, ly, lz)*mean(diff(x))*mean(diff(y));
 
 figure(3) % these frames are in logarithmic scale, mind the different colorbar for Rxy and Txy
 x0=350;

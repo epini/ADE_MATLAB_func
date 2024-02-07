@@ -1,10 +1,10 @@
-function Txyt = Trans_TSR_ADE_Matched(x, y, t, L, n_matched, lx, ly, lz, sx, sy, mua)
+function Txyt = Txyt_ADE_matched(x, y, t, L, n_matched, lx, ly, lz, sx, sy, mua)
 
 % this function returns the time- and space-resolved transmittance T(x,y,t)
-% for an anisotropic slab of thickness L [um].
-% The refractive index is matched with the environment. Absorption is considered to be uniform, mua [1/um].
-% t is an array of times in ps, while lx, ly and lz are scalars in microns.
-% sx and sy are the initial width in microns of the intensity gaussian distribution at t = 0 along x and y.
+% for an anisotropic slab of thickness L [μm].
+% The refractive index is matched with the environment. Absorption is considered to be uniform, mua [1/μm].
+% t is an array of times [ps], while lx, ly and lz are scalars [μm].
+% sx and sy are the initial width [μm] of the intensity gaussian distribution at t = 0 along x and y.
 
 v=299.7924589/n_matched;
 
@@ -45,7 +45,7 @@ z0 = lz;
 T = zeros(size(t));
 Txyt = zeros(length(x),length(y),length(t));
 
-M = 10000; %number of iterations
+M = 10000; % number of virtual sources considered in the expansion
 for m = -M:M
     z1 = L*(1-2*m) - 4*m*ze - z0;
     z2 = L*(1-2*m) - (4*m - 2)*ze + z0;

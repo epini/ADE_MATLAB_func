@@ -1,10 +1,9 @@
-function Rxyt = Refl_TSR_ADE_Matched(x, y, t, L, n_matched, lx, ly, lz, sx, sy, mua)
+function Rxy = Rxy_ADE_matched(x, y, L, n_matched, lx, ly, lz)
 
-% this function returns the time- and space-resolved Reflectance R(x,y,t)
-% for an anisotropic slab of thickness L [um].
-% The refractive index is matched with the environment. Absorption is considered to be uniform, mua [1/um].
-% t is an array of times in ps, while lx, ly and lz are scalars in microns.
-% sx and sy are the initial width in microns of the intensity gaussian distribution at t = 0 along x and y.
+% this function returns the space resolved steady-state reflectance R(x,y)
+% for a non-absorbing anisotropic slab of thickness L [μm].
+% The refractive index is matched with the environment.
+% lx, ly and lz are scalars [μm].
 
 v=299.7924589/n_matched;
 
@@ -42,19 +41,15 @@ end
 D = (Dx*Dy*Dz)^(1/3);
 z0 = lz;
 
-R = zeros(size(t));
-Rxyt = zeros(length(x),length(y),length(t));
+Rxy = zeros(length(x),length(y));
 
-M = 10000; %number of iterations
+M = 5000; % number of virtual sources considered in the expansion
 for m = -M:M
     z3 = -2*m*L - 4*m*ze - z0;
     z4 = -2*m*L - (4*m - 2)*ze + z0;
-    R = R + (z3*exp(-(z3)^2./(4*Dz*t))-z4*exp(-(z4)^2./(4*Dz*t)));
+    Rxy = Rxy + z3.*(1/Dz*z3^2 + 1/Dx.*(x.^2).' + 1/Dy.*y.^2).^(-3/2) - z4.*(1/Dz*z4^2 + 1/Dx.*(x.^2).' + 1/Dy.*y.^2).^(-3/2);
 end
 
-j=1;
-for i=t
-    Rxyt(:,:,j) = -exp(-x.^2./(sx^2+4*Dx*i)).*(exp(-y.^2./(sy^2+4*Dy*i))).'./((2*(4*pi)^(3/2)*(4*i)^(5/2)*(Dx*Dy*Dz)^(1/2))).*R(j).'.*exp(-v*i*mua)/2;
-    j=j+1;
-end
+Rxy = -D^(-3/2)*Rxy/4/pi;
+
 end
