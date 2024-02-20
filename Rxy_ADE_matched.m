@@ -1,8 +1,9 @@
-function Rxy = Rxy_ADE_matched(x, y, L, n_matched, lx, ly, lz)
+function Rxy = Rxy_ADE_matched(x, y, L, n_matched, lx, ly, lz, mua)
 % RXY_ADE_MATCHED space-resolved reflectance from an index-matched turbid slab
 %
 % Brief: this function returns the space-resolved steady-state reflectance R(x,y)
-% for a non-absorbing anisotropic slab of thickness L [μm].
+% for an anisotropic scattering slab of thickness L [μm].
+% Absorption is considered to be uniform, mua [1/μm].
 % The refractive index is matched with the environment.
 % lx, ly and lz are scalars [μm].
 % 
@@ -14,6 +15,7 @@ function Rxy = Rxy_ADE_matched(x, y, L, n_matched, lx, ly, lz)
 %    lx - scattering mean free path along x [μm]
 %    ly - scattering mean free path along y [μm]
 %    lz - scattering mean free path along z [μm]
+%    mua - absorption rate [1/μm]
 % 
 % Outputs:
 %    Rxy - array of space-resolved reflectance R(x,y)
@@ -66,7 +68,8 @@ M = 5000; % number of virtual sources considered in the expansion
 for m = -M:M
     z3 = -2*m*L - 4*m*ze - z0;
     z4 = -2*m*L - (4*m - 2)*ze + z0;
-    Rxy = Rxy + z3.*(1/Dz*z3^2 + 1/Dx.*(x.^2).' + 1/Dy.*y.^2).^(-3/2) - z4.*(1/Dz*z4^2 + 1/Dx.*(x.^2).' + 1/Dy.*y.^2).^(-3/2);
+    Rxy = Rxy + z3.*(z3^2/Dz + (x.^2).'/Dx + y.^2/Dy).^(-3/2).*(1 + (mua)*(z3^2/Dz + (x.^2).'/Dx + y.^2/Dy).^(1/2)).*exp(-((mua)*(z3^2/Dz + (x.^2).'/Dx + y.^2/Dy).^(1/2)))...
+        - z4.*(z4^2/Dz + (x.^2).'/Dx + y.^2/Dy).^(-3/2).*(1 + (mua)*(z4^2/Dz + (x.^2).'/Dx + y.^2/Dy).^(1/2)).*exp(-((mua)*(z4^2/Dz + (x.^2).'/Dx + y.^2/Dy).^(1/2)));
 end
 
 Rxy = -D^(-3/2)*Rxy/4/pi;

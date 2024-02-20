@@ -1,8 +1,9 @@
-function Txy = Txy_ADE_matched(x, y, L, n_matched, lx, ly, lz)
+function Txy = Txy_ADE_matched(x, y, L, n_matched, lx, ly, lz, mua)
 % TXY_ADE_MATCHED space-resolved transmittance from an index-matched turbid slab
 %
 % Brief: this function returns the space-resolved steady-state transmittance T(x,y)
-% for a non-absorbing anisotropic slab of thickness L [μm].
+% for an anisotropic scattering slab of thickness L [μm].
+% Absorption is considered to be uniform, mua [1/μm].
 % The refractive index is matched with the environment.
 % lx, ly and lz are scalars [μm].
 % 
@@ -14,6 +15,7 @@ function Txy = Txy_ADE_matched(x, y, L, n_matched, lx, ly, lz)
 %    lx - scattering mean free path along x [μm]
 %    ly - scattering mean free path along y [μm]
 %    lz - scattering mean free path along z [μm]
+%    mua - absorption rate [1/μm]
 % 
 % Outputs:
 %    Txy - array of space-resolved transmittance T(x,y)
@@ -66,7 +68,8 @@ M = 5000; % number of virtual sources considered in the expansion
 for m = -M:M
     z1 = L*(1-2*m) - 4*m*ze - z0;
     z2 = L*(1-2*m) - (4*m - 2)*ze + z0;
-    Txy = Txy + z1.*(1/Dz*z1^2 + 1/Dx.*(x.^2).' + 1/Dy.*y.^2).^(-3/2) - z2.*(1/Dz*z2^2 + 1/Dx.*(x.^2).' + 1/Dy.*y.^2).^(-3/2);
+    Txy = Txy + z1.*(z1^2/Dz + (x.^2).'/Dx + y.^2/Dy).^(-3/2).*(1 + (mua)*(z1^2/Dz + (x.^2).'/Dx + y.^2/Dy).^(1/2)).*exp(-((mua)*(z1^2/Dz + (x.^2).'/Dx + y.^2/Dy).^(1/2)))...
+        - z2.*(z2^2/Dz + (x.^2).'/Dx + y.^2/Dy).^(-3/2).*(1 + (mua)*(z2^2/Dz + (x.^2).'/Dx + y.^2/Dy).^(1/2)).*exp(-((mua)*(z2^2/Dz + (x.^2).'/Dx + y.^2/Dy).^(1/2)));
 end
 
 Txy = D^(-3/2)*Txy/4/pi;

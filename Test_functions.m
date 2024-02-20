@@ -72,10 +72,12 @@ end
 
 %% Steady-state reflectance/transmittance
 
-Rxy = Rxy_ADE_matched(x, y, L, n_matched, lx, ly, lz)*mean(diff(x))*mean(diff(y));
-Txy = Txy_ADE_matched(x, y, L, n_matched, lx, ly, lz)*mean(diff(x))*mean(diff(y));
+mua = 1e-1; % increase absorption to have visible effect in steady-state frames
 
-figure(3) % these frames are in logarithmic scale, mind the different colorbar for Rxy and Txy
+Rxy = Rxy_ADE_matched(x, y, L, n_matched, lx, ly, lz, mua)*mean(diff(x))*mean(diff(y));
+Txy = Txy_ADE_matched(x, y, L, n_matched, lx, ly, lz, mua)*mean(diff(x))*mean(diff(y));
+
+figure(4) % these frames are in logarithmic scale, mind the different colorbar for Rxy and Txy
 x0 = 350;
 y0 = 60;
 width = 800;
@@ -86,7 +88,7 @@ tile.Padding = 'compact';
 tile.TileSpacing = 'compact';
 colormap(parula(256))
 
-figure(3), nexttile
+figure(4), nexttile
 imagesc(x, y, Rxy)
 axis equal tight
 colorbar
@@ -96,7 +98,7 @@ ylabel('$\displaystyle y$ (micron)','interpreter','latex', 'Fontsize', 14)
 xlabel('$\displaystyle x$ (micron)','interpreter','latex', 'Fontsize', 14)
 title('$\displaystyle$ Steady-state Reflectance','interpreter','latex', 'Fontsize', 14)
 
-figure(3), nexttile
+figure(4), nexttile
 imagesc(x, y, Txy)
 axis equal tight
 colorbar
@@ -106,7 +108,7 @@ ylabel('$\displaystyle y$ (micron)','interpreter','latex', 'Fontsize', 14)
 xlabel('$\displaystyle x$ (micron)','interpreter','latex', 'Fontsize', 14)
 title('$\displaystyle$ Steady-state Transmittance','interpreter','latex', 'Fontsize', 14)
 
-figure(3), nexttile, grid on, box on
+figure(4), nexttile, grid on, box on
 contour(x, y, Rxy, logspace(0,-8,33), 'k')
 axis equal tight
 axis([min(x) max(x) min(y) max(y)])
@@ -115,7 +117,7 @@ xlabel('$\displaystyle x$ (micron)','interpreter','latex', 'Fontsize', 14)
 title('$\displaystyle$ Steady-state Reflectance','interpreter','latex', 'Fontsize', 14)
 legend('$\displaystyle$ $10^{0.25\times n}$','interpreter','latex', 'Fontsize', 12)
 
-figure(3), nexttile, grid on, box on
+figure(4), nexttile, grid on, box on
 contour(x, y, Txy, logspace(0,-8,33), 'k')
 axis equal tight
 axis([min(x) max(x) min(y) max(y)])

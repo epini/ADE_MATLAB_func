@@ -77,7 +77,7 @@ end
 
 j = 1;
 for i = t
-    Rxyt(:,:,j) = -exp(-x.^2./(sx^2+4*Dx*i)).*(exp(-y.^2./(sy^2+4*Dy*i))).'./((2*(4*pi)^(3/2)*(4*i)^(5/2)*(Dx*Dy*Dz)^(1/2))).*R(j).'.*exp(-v*i*mua)/2;
+    Rxyt(:,:,j) = -exp(-x.^2./(sx^2+4*Dx*i)).*(exp(-y.^2./(sy^2+4*Dy*i))).'./((2*(4*pi)^(3/2)*i^(5/2)*(Dx*Dy*Dz)^(1/2))).*R(j).'.*exp(-v*i*mua);
     j = j + 1;
 end
 end
