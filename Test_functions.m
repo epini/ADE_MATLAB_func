@@ -38,7 +38,7 @@ set(gca, 'yscale', 'log')
 ylabel('$\displaystyle$ Intensity (a.u.)','interpreter','latex', 'Fontsize', 16)
 xlabel('$\displaystyle t$ (ps)','interpreter','latex', 'Fontsize', 16)
 legend('Total Reflectance', 'Total Transmittance','interpreter','latex', 'Fontsize', 14)
-axis([0 length(t) 1e-8 1])
+axis([0 length(t)*mean(diff(t)) 1e-8 1])
 
 %% Time- and Space-Resolved reflectance
 % transmittance is identical after the ballistic transient when the frames are normalized
@@ -72,12 +72,10 @@ end
 
 %% Steady-state reflectance/transmittance
 
-mua = 1e-1; % increase absorption to have visible effect in steady-state frames
-
 Rxy = Rxy_ADE_matched(x, y, L, n_matched, lx, ly, lz, mua)*mean(diff(x))*mean(diff(y));
 Txy = Txy_ADE_matched(x, y, L, n_matched, lx, ly, lz, mua)*mean(diff(x))*mean(diff(y));
 
-figure(4) % these frames are in logarithmic scale, mind the different colorbar for Rxy and Txy
+figure(3) % these frames are in logarithmic scale, mind the different colorbar for Rxy and Txy
 x0 = 350;
 y0 = 60;
 width = 800;
@@ -88,7 +86,7 @@ tile.Padding = 'compact';
 tile.TileSpacing = 'compact';
 colormap(parula(256))
 
-figure(4), nexttile
+figure(3), nexttile
 imagesc(x, y, Rxy)
 axis equal tight
 colorbar
@@ -98,7 +96,7 @@ ylabel('$\displaystyle y$ (micron)','interpreter','latex', 'Fontsize', 14)
 xlabel('$\displaystyle x$ (micron)','interpreter','latex', 'Fontsize', 14)
 title('$\displaystyle$ Steady-state Reflectance','interpreter','latex', 'Fontsize', 14)
 
-figure(4), nexttile
+figure(3), nexttile
 imagesc(x, y, Txy)
 axis equal tight
 colorbar
@@ -108,7 +106,7 @@ ylabel('$\displaystyle y$ (micron)','interpreter','latex', 'Fontsize', 14)
 xlabel('$\displaystyle x$ (micron)','interpreter','latex', 'Fontsize', 14)
 title('$\displaystyle$ Steady-state Transmittance','interpreter','latex', 'Fontsize', 14)
 
-figure(4), nexttile, grid on, box on
+figure(3), nexttile, grid on, box on
 contour(x, y, Rxy, logspace(0,-8,33), 'k')
 axis equal tight
 axis([min(x) max(x) min(y) max(y)])
@@ -117,11 +115,11 @@ xlabel('$\displaystyle x$ (micron)','interpreter','latex', 'Fontsize', 14)
 title('$\displaystyle$ Steady-state Reflectance','interpreter','latex', 'Fontsize', 14)
 legend('$\displaystyle$ $10^{0.25\times n}$','interpreter','latex', 'Fontsize', 12)
 
-figure(4), nexttile, grid on, box on
+figure(3), nexttile, grid on, box on
 contour(x, y, Txy, logspace(0,-8,33), 'k')
 axis equal tight
 axis([min(x) max(x) min(y) max(y)])
 ylabel('$\displaystyle y$ (micron)','interpreter','latex', 'Fontsize', 14)
 xlabel('$\displaystyle x$ (micron)','interpreter','latex', 'Fontsize', 14)
-title('$\displaystyle$ Steady-state Reflectance','interpreter','latex', 'Fontsize', 14)
+title('$\displaystyle$ Steady-state Transmittance','interpreter','latex', 'Fontsize', 14)
 legend('$\displaystyle$ $10^{0.25\times n}$','interpreter','latex', 'Fontsize', 12)

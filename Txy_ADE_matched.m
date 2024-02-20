@@ -68,8 +68,8 @@ M = 5000; % number of virtual sources considered in the expansion
 for m = -M:M
     z1 = L*(1-2*m) - 4*m*ze - z0;
     z2 = L*(1-2*m) - (4*m - 2)*ze + z0;
-    Txy = Txy + z1.*(z1^2/Dz + (x.^2).'/Dx + y.^2/Dy).^(-3/2).*(1 + (mua)*(z1^2/Dz + (x.^2).'/Dx + y.^2/Dy).^(1/2)).*exp(-((mua)*(z1^2/Dz + (x.^2).'/Dx + y.^2/Dy).^(1/2)))...
-        - z2.*(z2^2/Dz + (x.^2).'/Dx + y.^2/Dy).^(-3/2).*(1 + (mua)*(z2^2/Dz + (x.^2).'/Dx + y.^2/Dy).^(1/2)).*exp(-((mua)*(z2^2/Dz + (x.^2).'/Dx + y.^2/Dy).^(1/2)));
+    Txy = Txy + z1.*(z1^2/Dz + (x.^2).'/Dx + y.^2/Dy).^(-3/2).*(1 + (mua*v)^(1/2)*(z1^2/Dz + (x.^2).'/Dx + y.^2/Dy).^(1/2)).*exp(-((mua*v)^(1/2)*(z1^2/Dz + (x.^2).'/Dx + y.^2/Dy).^(1/2)))...
+        - z2.*(z2^2/Dz + (x.^2).'/Dx + y.^2/Dy).^(-3/2).*(1 + (mua*v)^(1/2)*(z2^2/Dz + (x.^2).'/Dx + y.^2/Dy).^(1/2)).*exp(-((mua*v)^(1/2)*(z2^2/Dz + (x.^2).'/Dx + y.^2/Dy).^(1/2)));
 end
 
 Txy = D^(-3/2)*Txy/4/pi;
