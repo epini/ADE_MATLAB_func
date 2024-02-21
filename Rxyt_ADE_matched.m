@@ -5,7 +5,7 @@ function Rxyt = Rxyt_ADE_matched(x, y, t, L, n_matched, lx, ly, lz, sx, sy, mua)
 % for an anisotropic slab of thickness L [μm].
 % The refractive index is matched with the environment. Absorption is considered to be uniform, mua [1/μm].
 % t is an array of times [ps], while lx, ly and lz are scalars [μm].
-% sx and sy are the initial variance [μm^2] of the 2D intensity gaussian distribution at t = 0 along x and y.
+% sx and sy are the initial standard deviation [μm] of the 2D intensity gaussian distribution at t = 0 along x and y.
 % 
 % Inputs:
 %    x - array of positions [μm]
@@ -16,8 +16,8 @@ function Rxyt = Rxyt_ADE_matched(x, y, t, L, n_matched, lx, ly, lz, sx, sy, mua)
 %    lx - scattering mean free path along x [μm]
 %    ly - scattering mean free path along y [μm]
 %    lz - scattering mean free path along z [μm]
-%    sx - spatial variance a t = 0 along x [μm^2]
-%    sy - spatial variance a t = 0 along y [μm^2]
+%    sx - standard deviation a t = 0 along x [μm]
+%    sy - standard deviation a t = 0 along y [μm]
 %    mua - absorption rate [1/μm]
 % 
 % Outputs:
@@ -77,7 +77,7 @@ end
 
 j = 1;
 for i = t
-    Rxyt(:,:,j) = -exp(-x.^2./(sx^2+4*Dx*i)).*(exp(-y.^2./(sy^2+4*Dy*i))).'./((2*(4*pi)^(3/2)*i^(5/2)*(Dx*Dy*Dz)^(1/2))).*R(j).'.*exp(-v*i*mua);
+    Rxyt(:,:,j) = -exp(-x.^2./(2*sx^2+4*Dx*i)).*(exp(-y.^2./(2*sy^2+4*Dy*i))).'./((2*(4*pi)^(3/2)*i^(5/2)*(Dx*Dy*Dz)^(1/2))).*R(j).'.*exp(-v*i*mua);
     j = j + 1;
 end
 end

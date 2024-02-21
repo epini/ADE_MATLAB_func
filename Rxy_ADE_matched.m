@@ -5,7 +5,8 @@ function Rxy = Rxy_ADE_matched(x, y, L, n_matched, lx, ly, lz, mua)
 % for an anisotropic scattering slab of thickness L [μm].
 % Absorption is considered to be uniform, mua [1/μm].
 % The refractive index is matched with the environment.
-% lx, ly and lz are scalars [μm].
+% lx, ly and lz are scalars [μm]. The source is considered to be
+% point-like.
 % 
 % Inputs:
 %    x - array of positions [μm]

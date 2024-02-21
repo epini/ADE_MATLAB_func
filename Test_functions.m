@@ -8,6 +8,8 @@
 % steady-state intensity profiles.
 % t is an array of times [ps], x and y are an array of positions [μm],
 % while lx, ly and lz are scalars [μm].
+% sx and sy are the initial standard deviation [μm] of the 2D intensity
+% gaussian distribution at t = 0 along x and y, defined only for Rxyt and Txyt.
 
 % Note that when discretizing a continuous function the binning width in
 % space and time must be accounted for (e.g. mean(diff(t)).
@@ -21,7 +23,7 @@ n_matched = 1.3;
 t = 0:500;
 x = -500:10:500;
 y = -500:10:500;
-mua = 1e-5;
+mua = 3e-5;
 lx = 30;
 ly = 10;
 lz = 20;
@@ -44,8 +46,9 @@ axis([0 length(t)*mean(diff(t)) 1e-8 1])
 % transmittance is identical after the ballistic transient when the frames are normalized
 
 t2 = linspace(0.5, 15.5, 16); % define shorter times, adjust the number of tiles if the number of times is changed
-sx = 0;
-sy = 0;
+
+sx = 20; % set standard deviation a t = 0 along x [μm]
+sy = 20; % set standard deviation a t = 0 along x [μm]
 
 Rxyt = Rxyt_ADE_matched(x, y, t2, L, n_matched, lx, ly, lz, sx, sy, mua)*mean(diff(t2))*mean(diff(x))*mean(diff(y));
 Txyt = Txyt_ADE_matched(x, y, t2, L, n_matched, lx, ly, lz, sx, sy, mua)*mean(diff(t2))*mean(diff(x))*mean(diff(y));
