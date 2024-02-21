@@ -14,10 +14,9 @@
 % Note that when discretizing a continuous function the binning width in
 % space and time must be accounted for (e.g. mean(diff(t)).
 
-%% set parameters
-% All parameters are set in μm and ps, but it is possible to rescale
-% them by a factory 1e3 assuming mm and ns.
+% All of the parameters are set in μm and ps, but it is possible to rescale
 
+%% set parameters
 % if computation is too slow, consider reducing time and space bins or the
 % number of virtual sources considered in the expansion M in the functions
 
