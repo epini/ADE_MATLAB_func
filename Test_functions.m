@@ -3,7 +3,8 @@
 % This MATLAB script runs a test of the Anisotropic Diffusive Equation
 % functions used to evaluate the transmittance/reflectance for an 
 % anisotropic slab of thickness L [μm].
-% The refractive index is matched with the environment.
+% If a refractive index contrast is set, the effect of Fresnel
+% reflections at the boundaries is considered.
 % Absorption is considered to be uniform, mua [1/μm], or absent for the
 % steady-state intensity profiles.
 % t is an array of times [ps], x and y are an array of positions [μm],
@@ -22,7 +23,8 @@
 % number of virtual sources considered in the expansion M in the functions
 
 L = 1000;
-n_matched = 1.3;
+n_in = 1.3;
+n_ext = 1.3;
 t = 0:500;
 x = -500:5:500;
 y = -500:5:500;
@@ -33,8 +35,8 @@ lz = 20;
 
 %% Total Time-Resolved reflectance/transmittance
 
-Rt = Rt_ADE_matched(t, L, n_matched, lx, ly, lz, mua)*mean(diff(t));
-Tt = Tt_ADE_matched(t, L, n_matched, lx, ly, lz, mua)*mean(diff(t));
+Rt = Rt_ADE(t, L, n_in, n_ext, lx, ly, lz, mua)*mean(diff(t));
+Tt = Tt_ADE(t, L, n_in, n_ext, lx, ly, lz, mua)*mean(diff(t));
 
 figure(1), hold on, grid on, box on
 plot(t, Rt, 'r')
@@ -51,10 +53,10 @@ axis([0 length(t)*mean(diff(t)) 1e-8 1])
 t2 = linspace(0.5, 15.5, 16); % define shorter times, adjust the number of tiles if the number of times is changed
 
 sx = 20; % set standard deviation a t = 0 along x [μm]
-sy = 20; % set standard deviation a t = 0 along x [μm]
+sy = 20; % set standard deviation a t = 0 along y [μm]
 
-Rxyt = Rxyt_ADE_matched(x, y, t2, L, n_matched, lx, ly, lz, sx, sy, mua)*mean(diff(t2))*mean(diff(x))*mean(diff(y));
-Txyt = Txyt_ADE_matched(x, y, t2, L, n_matched, lx, ly, lz, sx, sy, mua)*mean(diff(t2))*mean(diff(x))*mean(diff(y));
+Rxyt = Rxyt_ADE(x, y, t2, L, n_in, n_ext, lx, ly, lz, sx, sy, mua)*mean(diff(t2))*mean(diff(x))*mean(diff(y));
+Txyt = Txyt_ADE(x, y, t2, L, n_in, n_ext, lx, ly, lz, sx, sy, mua)*mean(diff(t2))*mean(diff(x))*mean(diff(y));
 
 figure(2) % these frames are in linear scale
 x0 = 500;
@@ -78,10 +80,10 @@ end
 
 %% Steady-state reflectance/transmittance
 
-Rxy = Rxy_ADE_matched(x, y, L, n_matched, lx, ly, lz, mua)*mean(diff(x))*mean(diff(y));
-Txy = Txy_ADE_matched(x, y, L, n_matched, lx, ly, lz, mua)*mean(diff(x))*mean(diff(y));
+Rxy = Rxy_ADE(x, y, L, n_in, n_ext, lx, ly, lz, mua)*mean(diff(x))*mean(diff(y));
+Txy = Txy_ADE(x, y, L, n_in, n_ext, lx, ly, lz, mua)*mean(diff(x))*mean(diff(y));
 
-figure(3) % these frames are in logarithmic scale, mind the different colorbar for Rxy and Txy
+figure(3) % these frames are in logarithmic scale, mind the different colorscales for Rxy and Txy
 x0 = 350;
 y0 = 60;
 width = 800;
