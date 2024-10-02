@@ -1,6 +1,7 @@
 # Anisotropic Diffusive Equation MATLAB functions
 
 A collection of utility functions returning solutions to the Anisotropic Diffusive Equation (ADE) in a scattering slab for different configurations (time- and/or space-resolved reflectance/transmittance).
+The slab is indefinitively extended in the xy plane, while z is the beam direction of incidence.
 
 This repository is provided as a supplement to our work on "Diffusion of light in structurally anisotropic media with uniaxial symmetry", DOI: [10.1103/PhysRevResearch.6.023051](https://doi.org/10.1103/PhysRevResearch.6.023051)
 
