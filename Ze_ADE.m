@@ -29,6 +29,10 @@ n = n_in/n_ext;
 
 if lx == lz && lx == ly % the isotropic case is treat separately
 
+    Rfun = @(chi) (1/2).*(abs((n.*chi - sqrt(1 - (1 - chi.^2).*n^2))./(n*chi + sqrt(1 - (1 - chi.^2).*n^2))).^2 + abs((chi - n.*sqrt(1 - (1 - chi.^2).*n^2))./(chi + n.*sqrt(1 - (1 - chi.^2).*n^2))).^2);
+    Cfun = @(chi) (chi.^2).*Rfun(chi);
+    Bfun = @(chi) chi.*Rfun(chi);
+
     if n == 1
         ze = 2*lx/3;
     else
@@ -49,7 +53,7 @@ else % anisotropic case
 
     C = integral2(Cfun, 0, 1, 0, 2*pi);
     B = integral2(Bfun, 0, 1, 0, 2*pi);
-    
+
     if n == 1
         ze = C/B;
     else
