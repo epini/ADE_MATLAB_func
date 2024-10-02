@@ -1,14 +1,13 @@
-function ze = Ze_ADE(L, n_in, n_ext, lx, ly, lz)
+function ze = Ze_ADE(n_in, n_ext, lx, ly, lz)
 % ZE_ADE Extrapolated length for a slab geometry
 %
 % Brief: This function returns the extrapolated length from an anisotropic
-% slab of thickness L [μm].
+% slab.
 % xy is the slab plane, while z is the direction of incidence of the pencil beam.
 % If a refractive index contrast is set, the effect of Fresnel
 % reflections at the boundaries is considered.
 %
 % Inputs:
-%    L - slab thickness [μm]
 %    n_in - refractive index of the diffusive medium
 %    n_ext - refractive index of the external medium
 %    lx - scattering mean free path along x [μm]
