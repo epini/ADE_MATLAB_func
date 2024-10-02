@@ -29,7 +29,7 @@ function Rt = Rt_ADE(t, L, n_in, n_ext, lx, ly, lz, mua)
 % Email:        pinie@lens.unifi.it
 
 [Dx, Dy, Dz] = D_Tensor_ADE(n_in, lx, ly, lz);
-ze = Ze_ADE(L, n_in, n_ext, lx, ly, lz);
+ze = Ze_ADE(n_in, n_ext, lx, ly, lz);
 
 v = 299.7924589/n_in;
 D = (Dx*Dy*Dz)^(1/3);
