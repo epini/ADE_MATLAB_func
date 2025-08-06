@@ -11,6 +11,32 @@ In addition to the uniaxial-symmetric case described in the paper, following a n
 Cite as: 
 > E. Pini, F. Martelli, A. Gatto, H. Schäfer, D.S. Wiersma and L. Pattelli (2024). Diffusion of light in structurally anisotropic media with uniaxial symmetry, [*PhysRevResearch.6.023051*](https://doi.org/10.1103/PhysRevResearch.6.023051)
 
+## Example: Time- and space-resolved transmittance in an anisotropic slab
+
+```matlab
+L = 1000;                   % slab thickness [μm]
+n_in = 1.3;                 % internal refractive index
+n_ext = 1;                  % external refractive index
+mua = 3e-5;                 % absorption coeff. [1/μm]
+lx = 30;                    % scattering mean free path along x [μm]
+ly = 10;                    % scattering mean free path along Y [μm]
+lz = 20;                    % scattering mean free path along z [μm]
+t = linspace(1, 501, 100);  % array of times [ps]
+x = -2000:50:2000;          % define spatial grid for frames [μm]
+y = -2000:50:2000;
+
+Txyt = Txyt_ADE(x, y, t, L, n_in, n_ext, lx, ly, lz, sx, sy, mua) * mean(diff(t)) * mean(diff(x)) * mean(diff(y));
+
+for i = 1:length(t)
+    figure(1)
+    imagesc(x, y, Txyt(:,:,i));
+    axis equal tight
+    set(gca, 'XTickLabel', [], 'YTickLabel', []);
+    title(sprintf('Transmittance at t = %.f ps', t(i)), 'interpreter', 'latex', 'FontSize', 16)
+end
+```
+![Time-resolved reflectance example](figures/Txyt_animation.gif)
+
 ## Example: Space-resolved transmittance in an anisotropic slab
 
 ```matlab
@@ -21,7 +47,7 @@ mua = 3e-5;       % absorption coeff. [1/μm]
 lx = 30;          % scattering mean free path along x [μm]
 ly = 10;          % scattering mean free path along Y [μm]
 lz = 20;          % scattering mean free path along z [μm]
-x = -2000:50:2000;  % define spatial grid for frame
+x = -2000:50:2000;  % define spatial grid for frame [μm]
 y = -2000:50:2000;
 
 Txy = Txy_ADE(x, y, L, n_in, n_ext, lx, ly, lz, mua) * mean(diff(x)) * mean(diff(y));
