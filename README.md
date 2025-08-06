@@ -21,8 +21,8 @@ mua = 3e-5;       % absorption coeff. [1/μm]
 lx = 30;          % scattering mean free path along x [μm]
 ly = 10;          % scattering mean free path along Y [μm]
 lz = 20;          % scattering mean free path along z [μm]
-x = -500:10:500;  % define spatial grid for frame
-y = -500:10:500;
+x = -2000:50:2000;  % define spatial grid for frame
+y = -2000:50:2000;
 
 Txy = Txy_ADE(x, y, L, n_in, n_ext, lx, ly, lz, mua) * mean(diff(x)) * mean(diff(y));
 
@@ -31,6 +31,7 @@ colorbar
 ylabel('y [μm]')
 xlabel('x [μm]')
 axis equal tight
+set(gca,'ColorScale','log')
 ```
 
 ![Time-resolved reflectance example](figures/example_Txy.png)
