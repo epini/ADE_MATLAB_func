@@ -20,7 +20,7 @@ n_ext = 1;        % external refractive index
 mua = 3e-5;       % absorption coeff. [1/μm]
 lx = 30;          % scattering mean free path along x [μm]
 ly = 10;          % scattering mean free path along Y [μm]
-lz = 30;          % scattering mean free path along z [μm]
+lz = 20;          % scattering mean free path along z [μm]
 x = -500:10:500;  % define spatial grid for frame
 y = -500:10:500;
 
@@ -44,7 +44,7 @@ n_ext = 1;                  % external refractive index
 mua = 3e-5;                 % absorption coeff. [1/μm]
 lx = 30;                    % scattering mean free path along x [μm]
 ly = 10;                    % scattering mean free path along Y [μm]
-lz = 30;                    % scattering mean free path along z [μm]
+lz = 20;                    % scattering mean free path along z [μm]
 t = 0:500;                  % array of times [ps]
 x = linspace(400, 2000, 5); % define positions of collection [μm]
 y = linspace(400, 2000, 5); % define positions of collection [μm]
