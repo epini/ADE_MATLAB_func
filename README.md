@@ -78,15 +78,12 @@ y = linspace(400, 2000, 5); % define positions of collection [μm]
 sx = 10;                    % std dev at t = 0 along x [μm]
 sy = 10;                    % std dev at t = 0 along y [μm]
 
-% Create figure
-figure('Position', [350, 60, 800, 400])
-tiledlayout(1, 2, 'Padding', 'compact', 'TileSpacing', 'compact')
-
-% Evaluate transmittance
 Txyt_x = squeeze(Txyt_ADE(x, 0, t, L, n_in, n_ext, lx, ly, lz, sx, sy, mua)) * mean(diff(t));
 Txyt_y = squeeze(Txyt_ADE(0, y, t, L, n_in, n_ext, lx, ly, lz, sx, sy, mua)) * mean(diff(t));
 
-% Plot for x
+figure('Position', [350, 60, 800, 400])
+tiledlayout(1, 2, 'Padding', 'compact', 'TileSpacing', 'compact')
+
 nexttile, hold on, grid on, box on
 title('TR transmittance in (x₀, 0) [μm]')
 plot(t, Txyt_x, 'LineWidth', 1)
@@ -95,7 +92,6 @@ xlabel('t [ps]'), ylabel('Intensity [a.u.]')
 axis([0 max(t) 1e-15 5e-10])
 legend(arrayfun(@(xi) sprintf('(%.0f, 0)', xi), x, 'UniformOutput', false), 'Location', 'northeast')
 
-% Plot for y
 nexttile, hold on, grid on, box on
 title('TR transmittance in (0, y₀) [μm]')
 plot(t, Txyt_y, 'LineWidth', 1)
