@@ -10,3 +10,23 @@ In addition to the uniaxial-symmetric case described in the paper, following a n
 
 Cite as: 
 > E. Pini, F. Martelli, A. Gatto, H. Schäfer, D.S. Wiersma and L. Pattelli (2024). Diffusion of light in structurally anisotropic media with uniaxial symmetry, [*PhysRevResearch.6.023051*](https://doi.org/10.1103/PhysRevResearch.6.023051)
+
+## Example: Space-resolved transmittance in an anisotropic slab
+
+```matlab
+L = 1000;
+n_in = 1.3;
+n_ext = 1;
+mua = 3e-5;
+lx = 30;
+ly = 10;
+lz = 30;
+x = -500:10:500; % define grid for frames
+y = -500:10:500;
+
+Txy = Txy_ADE(x, y, L, n_in, n_ext, lx, ly, lz, mua) * mean(diff(x)) * mean(diff(y));
+imagesc(x, y, Txy.')
+axis equal tight
+```
+
+![Time-resolved reflectance example](figures/time_resolved_reflectance.png)
