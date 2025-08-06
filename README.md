@@ -24,6 +24,8 @@ lz = 20;                    % scattering mean free path along z [μm]
 t = linspace(1, 501, 100);  % array of times [ps]
 x = -2000:50:2000;          % define spatial grid for frames [μm]
 y = -2000:50:2000;
+sx = 10;                    % std dev at t = 0 along x [μm]
+sy = 10;                    % std dev at t = 0 along y [μm]
 
 Txyt = Txyt_ADE(x, y, t, L, n_in, n_ext, lx, ly, lz, sx, sy, mua) * mean(diff(t)) * mean(diff(x)) * mean(diff(y));
 
