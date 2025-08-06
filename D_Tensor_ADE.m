@@ -25,7 +25,7 @@ function [Dx, Dy, Dz] = D_Tensor_ADE(n_in, lx, ly, lz)
 
 v = 299.7924589/n_in;
 
-if lx == lz && lx == ly % the isotropic case is treat separately
+if lx == lz && lx == ly % the isotropic case is treated separately
 
     Dx = lx*v/3;
     Dy = Dx;

@@ -26,7 +26,7 @@ function ze = Ze_ADE(n_in, n_ext, lx, ly, lz)
 v = 299.7924589/n_in;
 n = n_in/n_ext;
 
-if lx == lz && lx == ly % the isotropic case is treat separately
+if lx == lz && lx == ly % the isotropic case is treated separately
 
     Rfun = @(chi) (1/2).*(abs((n.*chi - sqrt(1 - (1 - chi.^2).*n^2))./(n*chi + sqrt(1 - (1 - chi.^2).*n^2))).^2 + abs((chi - n.*sqrt(1 - (1 - chi.^2).*n^2))./(chi + n.*sqrt(1 - (1 - chi.^2).*n^2))).^2);
     Cfun = @(chi) (chi.^2).*Rfun(chi);
