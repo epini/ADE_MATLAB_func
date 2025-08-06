@@ -75,48 +75,34 @@ lz = 20;                    % scattering mean free path along z [μm]
 t = 0:500;                  % array of times [ps]
 x = linspace(400, 2000, 5); % define positions of collection [μm]
 y = linspace(400, 2000, 5); % define positions of collection [μm]
-sx = 10;                    % set standard deviation a t = 0 along x [μm]
-sy = 10;                    % set standard deviation a t = 0 along y [μm]
+sx = 10;                    % std dev at t = 0 along x [μm]
+sy = 10;                    % std dev at t = 0 along y [μm]
 
-figure()
-x0 = 350;
-y0 = 60;
-width = 800;
-height = 400;
-set(gcf,'position',[x0,y0,width,height])
-tile = tiledlayout(1,2);
-tile.Padding = 'compact';
-tile.TileSpacing = 'compact';
+% Create figure
+figure('Position', [350, 60, 800, 400])
+tiledlayout(1, 2, 'Padding', 'compact', 'TileSpacing', 'compact')
 
-% Transmittance moving along x
+% Evaluate transmittance
+Txyt_x = squeeze(Txyt_ADE(x, 0, t, L, n_in, n_ext, lx, ly, lz, sx, sy, mua)) * mean(diff(t));
+Txyt_y = squeeze(Txyt_ADE(0, y, t, L, n_in, n_ext, lx, ly, lz, sx, sy, mua)) * mean(diff(t));
+
+% Plot for x
 nexttile, hold on, grid on, box on
-title('TR transmittance in (x_0,0) [μm]')
-legend_entries = cell(1, length(x));
-for i = 1:length(x)
-    Txyt = squeeze(Txyt_ADE(x(i), 0, t, L, n_in, n_ext, lx, ly, lz, sx, sy, mua))*mean(diff(t));
-    plot(t, Txyt)
-    legend_entries{i} = sprintf('(%g, 0)', x(i));
-end
-set(gca, 'yscale', 'log')
-ylabel('Intensity [a.u.]')
-xlabel('t [ps]')
-axis([0 max(t) 5e-15 5e-10])
-legend(legend_entries, 'Location', 'northeast')
+title('TR transmittance in (x₀, 0) [μm]')
+plot(t, Txyt_x, 'LineWidth', 1)
+set(gca, 'YScale', 'log')
+xlabel('t [ps]'), ylabel('Intensity [a.u.]')
+axis([0 max(t) 1e-15 5e-10])
+legend(arrayfun(@(xi) sprintf('(%.0f, 0)', xi), x, 'UniformOutput', false), 'Location', 'northeast')
 
-% Transmittance moving along y
+% Plot for y
 nexttile, hold on, grid on, box on
-title('TR transmittance in (0,y_0) [μm]')
-legend_entries = cell(1, length(y));
-for i = 1:length(y)
-    Txyt = squeeze(Txyt_ADE(0, y(i), t, L, n_in, n_ext, lx, ly, lz, sx, sy, mua))*mean(diff(t));
-    plot(t, Txyt)
-    legend_entries{i} = sprintf('(0, %g)', y(i));
-end
-set(gca, 'yscale', 'log')
-ylabel('Intensity [a.u.]')
-xlabel('t [ps]')
-axis([0 max(t) 5e-16 5e-10])
-legend(legend_entries, 'Location', 'northeast')
+title('TR transmittance in (0, y₀) [μm]')
+plot(t, Txyt_y, 'LineWidth', 1)
+set(gca, 'YScale', 'log')
+xlabel('t [ps]'), ylabel('Intensity [a.u.]')
+axis([0 max(t) 1e-15 5e-10])
+legend(arrayfun(@(yi) sprintf('(0, %.0f)', yi), y, 'UniformOutput', false), 'Location', 'northeast')
 ```
 
 ![Time-resolved reflectance example](figures/example_Txyt.png)
