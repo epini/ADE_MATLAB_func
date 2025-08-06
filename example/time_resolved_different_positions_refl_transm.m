@@ -1,7 +1,6 @@
-%% Test Anisotropic Diffusive Equation MATLAB functions for
-%% Time-Resolved reflectance/transmittance at different positions
+%% Example of time-Resolved reflectance/transmittance at different positions
 
-% This MATLAB script runs a test of the Anisotropic Diffusive Equation
+% This MATLAB script runs an example of the Anisotropic Diffusive Equation
 % functions used to evaluate the transmittance/reflectance for an 
 % anisotropic slab of thickness L [μm] at different positions on the surface.
 % If a refractive index contrast is set, the effect of Fresnel

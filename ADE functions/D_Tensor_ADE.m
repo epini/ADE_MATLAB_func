@@ -17,7 +17,7 @@ function [Dx, Dy, Dz] = D_Tensor_ADE(n_in, lx, ly, lz)
 %    Dy - diffusive rate along y [μm^2/ps] or [mm^2/ns]
 %    Dz - diffusive rate along z [μm^2/ps] or [mm^2/ns]
 %
-% See also: Test_function.m
+% See also: example_all_functions.m
 
 % Author:       Ernesto Pini
 % Affiliation:  Department of Physics and Astronomy, Università di Firenze

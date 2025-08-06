@@ -1,6 +1,6 @@
-%% Test Anisotropic Diffusive Equation MATLAB functions
+%% Example of usage for all Anisotropic Diffusive Equation MATLAB functions
 
-% This MATLAB script runs a test of all the Anisotropic Diffusive Equation
+% This MATLAB script runs an example of all the Anisotropic Diffusive Equation
 % functions used to evaluate the transmittance/reflectance for an 
 % anisotropic slab of thickness L [μm].
 % If a refractive index contrast is set, the effect of Fresnel

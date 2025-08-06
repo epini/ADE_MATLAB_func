@@ -1,7 +1,6 @@
-%% Test Anisotropic Diffusive Equation MATLAB functions for
-%% Total Time-Resolved reflectance/transmittance
+%% Example of total time-resolved reflectance/transmittance
 
-% This MATLAB script runs a test of the Anisotropic Diffusive Equation
+% This MATLAB script runs an example of the Anisotropic Diffusive Equation
 % functions used to evaluate the total time-resolved transmittance/reflectance
 % for an anisotropic slab of thickness L [μm].
 % This corresponds to integrating all of the time-resolved

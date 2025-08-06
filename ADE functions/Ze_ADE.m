@@ -17,7 +17,7 @@ function ze = Ze_ADE(n_in, n_ext, lx, ly, lz)
 % Outputs:
 %    ze - extrapolated length
 %
-% See also: Test_function.m
+% See also: example_all_functions.m
 
 % Author:       Ernesto Pini
 % Affiliation:  Department of Physics and Astronomy, Università di Firenze
