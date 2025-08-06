@@ -25,8 +25,12 @@ x = -500:10:500; % define grid for frames
 y = -500:10:500;
 
 Txy = Txy_ADE(x, y, L, n_in, n_ext, lx, ly, lz, mua) * mean(diff(x)) * mean(diff(y));
+
 imagesc(x, y, Txy.')
+colorbar
+ylabel('$y$ [$\mu$m]','interpreter','latex', 'Fontsize', 14)
+xlabel('$x$ [$\mu$m]','interpreter','latex', 'Fontsize', 14)
 axis equal tight
 ```
 
-![Time-resolved reflectance example](figures/time_resolved_reflectance.png)
+![Time-resolved reflectance example](figures/example_Txy.png)
