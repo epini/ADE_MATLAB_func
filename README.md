@@ -14,22 +14,22 @@ Cite as:
 ## Example: Space-resolved transmittance in an anisotropic slab
 
 ```matlab
-L = 1000;
-n_in = 1.3;
-n_ext = 1;
-mua = 3e-5;
-lx = 30;
-ly = 10;
-lz = 30;
-x = -500:10:500; % define grid for frames
+L = 1000;         % slab thickness [μm]
+n_in = 1.3;       % internal refractive index
+n_ext = 1;        % external refractive index
+mua = 3e-5;       % absorption coeff. [1/μm]
+lx = 30;          % scattering mean free path along x [μm]
+ly = 10;          % scattering mean free path along Y [μm]
+lz = 30;          % scattering mean free path along z [μm]
+x = -500:10:500;  % define spatial grid for frame
 y = -500:10:500;
 
 Txy = Txy_ADE(x, y, L, n_in, n_ext, lx, ly, lz, mua) * mean(diff(x)) * mean(diff(y));
 
 imagesc(x, y, Txy.')
 colorbar
-ylabel('$y$ [$\mu$m]','interpreter','latex', 'Fontsize', 14)
-xlabel('$x$ [$\mu$m]','interpreter','latex', 'Fontsize', 14)
+ylabel('y [μm]')
+xlabel('x [μm]')
 axis equal tight
 ```
 
