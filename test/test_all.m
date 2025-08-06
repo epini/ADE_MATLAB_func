@@ -1,6 +1,6 @@
 %% Test Anisotropic Diffusive Equation MATLAB functions
 
-% This MATLAB script runs a test of the Anisotropic Diffusive Equation
+% This MATLAB script runs a test of all the Anisotropic Diffusive Equation
 % functions used to evaluate the transmittance/reflectance for an 
 % anisotropic slab of thickness L [μm].
 % If a refractive index contrast is set, the effect of Fresnel
@@ -125,7 +125,6 @@ ylabel('Intensity [a.u.]','interpreter','latex', 'Fontsize', 14)
 xlabel('$t$ [ps]','interpreter','latex', 'Fontsize', 14)
 axis([0 max(t) 5e-16 1e-8])
 legend(legend_entries, 'Location', 'northeast', 'Interpreter', 'latex', 'Fontsize', 12)
-
 
 %% Time- and Space-Resolved reflectance
 % transmittance is identical after the ballistic transient when the frames are normalized
