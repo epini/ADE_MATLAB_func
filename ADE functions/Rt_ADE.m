@@ -22,7 +22,7 @@ function Rt = Rt_ADE(t, L, n_in, n_ext, lx, ly, lz, mua)
 % Outputs:
 %    Rt - array of total time-resolved reflectance R(t)
 %
-% See also: Test_function.m
+% See also: total_time_resolved_refl_trans.m
 
 % Author:       Ernesto Pini
 % Affiliation:  Department of Physics and Astronomy, Università di Firenze

@@ -1,18 +1,23 @@
 %% Test Anisotropic Diffusive Equation MATLAB functions
 
-% This MATLAB script runs a test of all the Anisotropic Diffusive Equation
+% This MATLAB script runs a test of the Anisotropic Diffusive Equation
 % functions used to evaluate the transmittance/reflectance for an 
 % anisotropic slab of thickness L [μm].
 % If a refractive index contrast is set, the effect of Fresnel
 % reflections at the boundaries is considered.
-% Absorption is considered to be uniform and isotropic, mua [1/μm].
+% Absorption is considered to be uniform, mua [1/μm], or absent for the
+% steady-state intensity profiles.
 % t is an array of times [ps], x and y are an array of positions [μm],
 % while lx, ly and lz are scalars [μm].
 % sx and sy are the initial standard deviation [μm] of the 2D intensity
-% gaussian distribution at t = 0 along x and y, defined only for Rxyt and Txyt.
+% gaussian distribution at t = 0 along x and y.
 
 % Note that when discretizing a continuous function the binning width in
 % space and time must be accounted for (e.g. mean(diff(t)).
+
+% Author:       Ernesto Pini
+% Affiliation:  Department of Physics and Astronomy, Università di Firenze
+% Email:        pinie@lens.unifi.it
 
 %% set parameters
 % All parameters are set in μm and ps, but you can assume they are mm and ns
@@ -48,8 +53,8 @@ axis([0 max(t) 1e-8 1])
 
 %% Time-Resolved reflectance/transmittance at different locations
 
-sx = 10; % set standard deviation a t = 0 along x [μm]
-sy = 10; % set standard deviation a t = 0 along y [μm]
+sx = 20; % set standard deviation a t = 0 along x [μm]
+sy = 20; % set standard deviation a t = 0 along y [μm]
 
 x = linspace(400, 2000, 5); % define positions of collection [μm]
 y = linspace(400, 2000, 5); % define positions of collection [μm]
@@ -131,15 +136,12 @@ legend(legend_entries, 'Location', 'northeast', 'Interpreter', 'latex', 'Fontsiz
 x = -500:10:500; % define grid for image
 y = -500:10:500;
 
-t = linspace(0.1, 15.1, 16); % define shorter times, adjust the number of tiles if the number of times is changed
+t2 = linspace(0.5, 15.5, 16); % define shorter times, adjust the number of tiles if the number of times is changed
 
-% reflectance and transmittance frames are identical after the ballistic
-% transient if the frames are normalized, only the amplitude is different
+Rxyt = Rxyt_ADE(x, y, t2, L, n_in, n_ext, lx, ly, lz, sx, sy, mua)*mean(diff(t2))*mean(diff(x))*mean(diff(y));
+Txyt = Txyt_ADE(x, y, t2, L, n_in, n_ext, lx, ly, lz, sx, sy, mua)*mean(diff(t2))*mean(diff(x))*mean(diff(y));
 
-Rxyt = Rxyt_ADE(x, y, t, L, n_in, n_ext, lx, ly, lz, sx, sy, mua)*mean(diff(t))*mean(diff(x))*mean(diff(y));
-Txyt = Txyt_ADE(x, y, t, L, n_in, n_ext, lx, ly, lz, sx, sy, mua)*mean(diff(t))*mean(diff(x))*mean(diff(y));
-
-figure(3) % reflectance frames
+figure(3) % these frames are in linear scale and normalized to their maximum
 x0 = 350;
 y0 = 60;
 width = 800;
@@ -150,35 +152,13 @@ tile.Padding = 'compact';
 tile.TileSpacing = 'compact';
 colormap(parula(256))
 
-for i = 1:length(t)
+for i = 1:length(t2)
     figure(3), nexttile
     imagesc(Rxyt(:,:,i));
     set(gca,'YTickLabel',[]);
     set(gca,'XTickLabel',[]);
     axis equal tight
-    title(strcat(num2str(t(i)), ' ps'),'interpreter','latex', 'Fontsize', 16)
-    colorbar
-end
-
-figure(4) % transmittance frames
-x0 = 350;
-y0 = 60;
-width = 800;
-height = 800;
-set(gcf,'position',[x0,y0,width,height])
-tile = tiledlayout(4,4);
-tile.Padding = 'compact';
-tile.TileSpacing = 'compact';
-colormap(parula(256))
-
-for i = 1:length(t)
-    figure(4), nexttile
-    imagesc(Txyt(:,:,i));
-    set(gca,'YTickLabel',[]);
-    set(gca,'XTickLabel',[]);
-    axis equal tight
-    title(strcat(num2str(t(i)), ' ps'),'interpreter','latex', 'Fontsize', 16)
-    colorbar
+    title(strcat(num2str(t2(i)), ' ps'),'interpreter','latex', 'Fontsize', 16)
 end
 
 %% Steady-state reflectance/transmittance
@@ -186,7 +166,7 @@ end
 Rxy = Rxy_ADE(x, y, L, n_in, n_ext, lx, ly, lz, mua)*mean(diff(x))*mean(diff(y));
 Txy = Txy_ADE(x, y, L, n_in, n_ext, lx, ly, lz, mua)*mean(diff(x))*mean(diff(y));
 
-figure(5), hold on % these frames are in logarithmic scale, mind the different colorscales for Rxy and Txy
+figure(4), hold on % these frames are in logarithmic scale, mind the different colorscales for Rxy and Txy
 x0 = 350;
 y0 = 60;
 width = 800;

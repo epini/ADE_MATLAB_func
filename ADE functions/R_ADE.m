@@ -20,7 +20,7 @@ function R = R_ADE(L, n_in, n_ext, lx, ly, lz, mua)
 % Outputs:
 %    R - total reflectance
 %
-% See also: Test_function.m
+% See also: total_refl_trans.m
 
 % Author:       Ernesto Pini
 % Affiliation:  Department of Physics and Astronomy, Università di Firenze

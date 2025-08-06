@@ -22,7 +22,7 @@ function Tt = Tt_ADE(t, L, n_in, n_ext, lx, ly, lz, mua)
 % Outputs:
 %    Tt - array of total time-resolved transmittance T(t)
 %
-% See also: Test_function.m
+% See also: total_time_resolved_refl_trans.m
 
 % Author:       Ernesto Pini
 % Affiliation:  Department of Physics and Astronomy, Università di Firenze

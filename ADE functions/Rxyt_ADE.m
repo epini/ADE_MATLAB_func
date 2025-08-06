@@ -28,7 +28,7 @@ function Rxyt = Rxyt_ADE(x, y, t, L, n_in, n_ext, lx, ly, lz, sx, sy, mua)
 % Outputs:
 %    Rxyt - 2D-array of time- and space-resolved reflectance R(x,y,t)
 % 
-% See also: Test_function.m
+% See also: time_space_resolved_refl_trans.m
 
 % Author:       Ernesto Pini
 % Affiliation:  Department of Physics and Astronomy, Università di Firenze

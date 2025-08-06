@@ -24,7 +24,7 @@ function Txy = Txy_ADE(x, y, L, n_in, n_ext, lx, ly, lz, mua)
 % Outputs:
 %    Txy - array of space-resolved transmittance T(x,y)
 % 
-% See also: Test_function.m
+% See also: space_resolved_refl_trans.m
 
 % Author:       Ernesto Pini
 % Affiliation:  Department of Physics and Astronomy, Università di Firenze

@@ -2,18 +2,21 @@
 %% Total Time-Resolved reflectance/transmittance
 
 % This MATLAB script runs a test of the Anisotropic Diffusive Equation
-% functions used to evaluate the total transmittance/reflectance for an 
-% anisotropic slab of thickness L [μm].
-% This corresponds to integrating all of the reflectance/transmittance
-% spatially over the whole slab surface.
+% functions used to evaluate the total time-resolved transmittance/reflectance
+% for an anisotropic slab of thickness L [μm].
+% This corresponds to integrating all of the time-resolved
+% reflectance/transmittance spatially over the whole slab surface.
 % If a refractive index contrast is set, the effect of Fresnel
 % reflections at the boundaries is considered.
-% Absorption is considered to be uniform, mua [1/μm], or absent for the
-% steady-state intensity profiles.
+% Absorption is considered to be uniform and isotropic, mua [1/μm].
 % t is an array of times [ps], while lx, ly and lz are scalars [μm].
 
 % Note that when discretizing a continuous function the binning width in
 % time must be accounted for (e.g. mean(diff(t)).
+
+% Author:       Ernesto Pini
+% Affiliation:  Department of Physics and Astronomy, Università di Firenze
+% Email:        pinie@lens.unifi.it
 
 %% set parameters
 % All parameters are set in μm and ps, but you can assume they are mm and ns

@@ -6,15 +6,18 @@
 % transmittance/reflectance for an anisotropic slab of thickness L [μm].
 % If a refractive index contrast is set, the effect of Fresnel
 % reflections at the boundaries is considered.
-% Absorption is considered to be uniform, mua [1/μm], or absent for the
-% steady-state intensity profiles.
+% Absorption is considered to be uniform, mua [1/μm].
 % t is an array of times [ps], x and y are an array of positions [μm],
 % while lx, ly and lz are scalars [μm].
 % sx and sy are the initial standard deviation [μm] of the 2D intensity
-% gaussian distribution at t = 0 along x and y, defined only for Rxyt and Txyt.
+% gaussian distribution at t = 0 along x and y.
 
 % Note that when discretizing a continuous function the binning width in
 % time and space must be accounted for (e.g. mean(diff(t)).
+
+% Author:       Ernesto Pini
+% Affiliation:  Department of Physics and Astronomy, Università di Firenze
+% Email:        pinie@lens.unifi.it
 
 %% set parameters
 % All parameters are set in μm and ps, but you can assume they are mm and ns
@@ -30,7 +33,7 @@ mua = 3e-5;
 lx = 30;
 ly = 10;
 lz = 20;
-t = linspace(0.2, 12.2, 16);
+t = linspace(0.1, 15.1, 16);
 x = -500:10:500; % define grid for frames
 y = -500:10:500;
 sx = 10; % set standard deviation a t = 0 along x [μm]

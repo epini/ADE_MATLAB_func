@@ -19,8 +19,7 @@ function T = T_ADE(L, n_in, n_ext, lx, ly, lz, mua)
 %
 % Outputs:
 %    T - total transmittance
-%
-% See also: Test_function.m
+% See also: total_refl_trans.m
 
 % Author:       Ernesto Pini
 % Affiliation:  Department of Physics and Astronomy, Università di Firenze
