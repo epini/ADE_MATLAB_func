@@ -18,10 +18,10 @@ L = 1000;                   % slab thickness [μm]
 n_in = 1.3;                 % internal refractive index
 n_ext = 1;                  % external refractive index
 mua = 3e-5;                 % absorption coeff. [1/μm]
-lx = 30; ly = 10; lz = 20;  % scattering mean free paths along x, y, z
-dt = 5; dx = 50;            % time and spatial resolution
+lx = 30; ly = 10; lz = 20;  % scattering mean free paths along x, y, z [μm]
+dt = 5; dx = 50;            % time [ps] and spatial [μm] resolution
 t = 1:dt:500;               % array of times [ps]
-x = -2000:dx:2000; y = x    % spatial grid [μm]
+x = -2000:dx:2000; y = x;    % spatial grid [μm]
 sx = 10; sy = 10;           % std dev at t = 0 along x and y [μm]
 
 Txyt = Txyt_ADE(x, y, t, L, n_in, n_ext, lx, ly, lz, sx, sy, mua) * dt * dx * dx;
@@ -30,7 +30,8 @@ figure
 for i = 1:length(t)
     imagesc(x, y, Txyt(:,:,i));
     axis equal tight
-    set(gca, 'XTickLabel', [], 'YTickLabel', []);
+    ylabel('y [μm]')
+    xlabel('x [μm]')
     title(sprintf('Transmittance at t = %.f ps', t(i)))
 end
 ```
@@ -43,8 +44,8 @@ L = 1000;                   % slab thickness [μm]
 n_in = 1.3;                 % internal refractive index
 n_ext = 1;                  % external refractive index
 mua = 3e-5;                 % absorption coeff. [1/μm]
-lx = 30; ly = 10; lz = 20;  % scattering mean free paths along x, y, z
-dx = 50;                    % spatial resolution
+lx = 30; ly = 10; lz = 20;  % scattering mean free paths along x, y, z [μm]
+dx = 50;                    % spatial resolution [μm]
 x = -2000:dx:2000; y = x;   % spatial grid [μm]
 
 Txy = Txy_ADE(x, y, L, n_in, n_ext, lx, ly, lz, mua) * dx * dx;
@@ -67,8 +68,8 @@ L = 1000;                   % slab thickness [μm]
 n_in = 1.3;                 % internal refractive index
 n_ext = 1;                  % external refractive index
 mua = 3e-5;                 % absorption coeff. [1/μm]
-lx = 30; ly = 10; lz = 20;  % scattering mean free paths along x, y, z
-dt = 1; dx = 5;             % timem and spatial resolution
+lx = 30; ly = 10; lz = 20;  % scattering mean free paths along x, y, z [μm]
+dt = 1; dx = 400;             % time [ps] and spatial [μm] resolution
 t = 0:dt:500;               % array of times [ps]
 x = 400:dx:2000; y = x;     % define positions of collection [μm]
 sx = 10; sy = 10;           % std dev at t = 0 along x and y [μm]
